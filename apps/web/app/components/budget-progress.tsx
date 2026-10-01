@@ -8,7 +8,7 @@ import { Progress } from '@/components/ui/progress'
 import { useCurrentEnvelopeSnapshot } from '@/lib/ledger'
 import { cn } from '@/lib/utils'
 import { CircleDollarSign, Plus } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 /**
  * Current-month budget bars, straight from the envelope snapshot.

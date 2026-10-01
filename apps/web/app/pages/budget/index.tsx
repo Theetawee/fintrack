@@ -43,7 +43,7 @@ import { CircleDollarSign, Copy, Edit, Eraser, Plus, Sigma } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { EmptyPlaceholder } from '@/components/ui/empty-placeholder'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 export default function BudgetsPage() {
   const [showAddBudget, setShowAddBudget] = useState(false)
@@ -254,80 +254,76 @@ export default function BudgetsPage() {
 
       <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
         {budgetRows.map((row) => {
-            const spent = Number(row.spent)
-            const limit = Number(row.assigned) + Number(row.carryover)
-            const percentage = limit ? (spent / limit) * 100 : 0
+          const spent = Number(row.spent)
+          const limit = Number(row.assigned) + Number(row.carryover)
+          const percentage = limit ? (spent / limit) * 100 : 0
 
-            return (
-              <Card key={row.category_id}>
-                <CardHeader className='pb-2'>
-                  <div className='flex items-center justify-between'>
-                    <CardTitle>{row.category}</CardTitle>
-                    <Button
-                      variant='ghost'
-                      size='icon'
-                      className='h-8 w-8'
-                      onClick={() =>
-                        setEditingBudget({
-                          category: row.category_id,
-                          categoryName: row.category,
-                          amount_limit: row.assigned,
-                        })
-                      }
-                    >
-                      <Edit className='h-4 w-4' />
-                      <span className='sr-only'>Edit</span>
-                    </Button>
-                  </div>
-                  <CardDescription>
-                    <CurrencyDisplay amount={spent} /> of <CurrencyDisplay amount={limit} />
-                    {Number(row.carryover) !== 0 && (
-                      <span className='ml-1 text-xs'>
-                        (incl. <CurrencyDisplay amount={Number(row.carryover)} /> carryover)
-                      </span>
-                    )}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Progress
-                    value={percentage}
-                    className={cn(
-                      percentage >= 100
-                        ? 'text-rose-600'
-                        : percentage >= 85
-                        ? 'text-amber-600'
-                        : '',
-                    )}
-                  />
-                  <p
-                    className={cn(
-                      'mt-2 text-sm font-medium text-right',
-                      percentage >= 100
-                        ? 'text-rose-600'
-                        : percentage >= 85
+          return (
+            <Card key={row.category_id}>
+              <CardHeader className='pb-2'>
+                <div className='flex items-center justify-between'>
+                  <CardTitle>{row.category}</CardTitle>
+                  <Button
+                    variant='ghost'
+                    size='icon'
+                    className='h-8 w-8'
+                    onClick={() =>
+                      setEditingBudget({
+                        category: row.category_id,
+                        categoryName: row.category,
+                        amount_limit: row.assigned,
+                      })
+                    }
+                  >
+                    <Edit className='h-4 w-4' />
+                    <span className='sr-only'>Edit</span>
+                  </Button>
+                </div>
+                <CardDescription>
+                  <CurrencyDisplay amount={spent} /> of <CurrencyDisplay amount={limit} />
+                  {Number(row.carryover) !== 0 && (
+                    <span className='ml-1 text-xs'>
+                      (incl. <CurrencyDisplay amount={Number(row.carryover)} /> carryover)
+                    </span>
+                  )}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Progress
+                  value={percentage}
+                  className={cn(
+                    percentage >= 100 ? 'text-rose-600' : percentage >= 85 ? 'text-amber-600' : '',
+                  )}
+                />
+                <p
+                  className={cn(
+                    'mt-2 text-sm font-medium text-right',
+                    percentage >= 100
+                      ? 'text-rose-600'
+                      : percentage >= 85
                         ? 'text-amber-600'
                         : 'text-emerald-600',
-                    )}
-                  >
-                    {percentage.toFixed(1)}%
-                  </p>
-                </CardContent>
-                <CardFooter className='pt-0'>
-                  <div className='text-xs text-muted-foreground'>
-                    {percentage >= 100 ? (
-                      <span className='text-rose-600 font-medium'>
-                        Over budget by <CurrencyDisplay amount={spent - limit} />
-                      </span>
-                    ) : (
-                      <span>
-                        <CurrencyDisplay amount={limit - spent} /> remaining
-                      </span>
-                    )}
-                  </div>
-                </CardFooter>
-              </Card>
-            )
-          })}
+                  )}
+                >
+                  {percentage.toFixed(1)}%
+                </p>
+              </CardContent>
+              <CardFooter className='pt-0'>
+                <div className='text-xs text-muted-foreground'>
+                  {percentage >= 100 ? (
+                    <span className='text-rose-600 font-medium'>
+                      Over budget by <CurrencyDisplay amount={spent - limit} />
+                    </span>
+                  ) : (
+                    <span>
+                      <CurrencyDisplay amount={limit - spent} /> remaining
+                    </span>
+                  )}
+                </div>
+              </CardFooter>
+            </Card>
+          )
+        })}
       </div>
 
       {/* Add Budget Dialog */}

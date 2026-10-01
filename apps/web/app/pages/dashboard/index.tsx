@@ -11,10 +11,10 @@ import { AnimateSpinner } from '@/components/spinner'
 import { EmptyPlaceholder } from '@/components/ui/empty-placeholder'
 import { CircleDollarSign, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Link } from 'react-router-dom'
+import { Link } from react-router
 import { CurrencyDisplay } from '@/components/ui/currency-display'
 import { DatePickerWithRange } from '@/components/date-range-picker'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from react-router
 import { useEffect } from 'react'
 import { useDateStore } from '@/hooks/use-date-store'
 import { formatDateForApi, parseApiDate } from '@/lib/date'

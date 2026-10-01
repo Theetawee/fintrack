@@ -20,7 +20,7 @@ import { getUser, logout } from '@/lib/auth'
 import { Bell, Menu } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 interface TopBarProps {
   onMenuClick?: () => void

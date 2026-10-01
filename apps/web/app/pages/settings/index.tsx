@@ -31,7 +31,7 @@ import { AxiosError } from 'axios'
 import { Bell, Bot, Building2, DatabaseBackup, Key, User } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router'
 
 interface UserProfile {
   id: number
@@ -65,7 +65,8 @@ export default function UserSettingsPage() {
 
   const requestedTab = searchParams.get('tab')
   const defaultTab =
-    requestedTab && ['profile', 'account', 'notifications', 'workspace', 'backups'].includes(requestedTab)
+    requestedTab &&
+    ['profile', 'account', 'notifications', 'workspace', 'backups'].includes(requestedTab)
       ? requestedTab
       : 'profile'
 
@@ -392,7 +393,9 @@ export default function UserSettingsPage() {
                 </CardContent>
                 <CardFooter className='flex justify-end'>
                   <Button type='submit' disabled={loading}>
-                    {loading ? t('settings.account.updating') : t('settings.account.updatePassword')}
+                    {loading
+                      ? t('settings.account.updating')
+                      : t('settings.account.updatePassword')}
                   </Button>
                 </CardFooter>
               </form>

@@ -1,14 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router'
 import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 
-import {
-  finishBankLinkAndDiscoverAccounts,
-  type SyncConnection,
-} from '@/lib/bank-sync-client'
+import { finishBankLinkAndDiscoverAccounts, type SyncConnection } from '@/lib/bank-sync-client'
 import { listAccounts, type FinanceAccount } from '@/lib/finance-client'
 
 import { MapDiscoveredAccounts } from '@/components/map-discovered-accounts'
@@ -46,8 +43,8 @@ export default function BankSyncCallbackPage() {
       })
       .catch((err) => {
         if (cancelled) return
-        const detail =
-          (err as { response?: { data?: { detail?: string } } })?.response?.data?.detail
+        const detail = (err as { response?: { data?: { detail?: string } } })?.response?.data
+          ?.detail
         setError(detail || "Couldn't finish connecting to your bank.")
       })
       .finally(() => {

@@ -20,7 +20,7 @@ import {
   TrendingUp,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router'
 
 interface SidebarProps {
   expanded: boolean
@@ -38,7 +38,9 @@ export function Sidebar({ expanded, toggleSidebar, isMobile, isOpen, onOpenChang
   // hiding the link for everyone else avoids a "why is this empty" surprise,
   // since the API silently returns nothing to a non-manager rather than 403.
   const canManageAuditLog =
-    activeOrg && !activeOrg.personal && (activeOrg.my_role === 'owner' || activeOrg.my_role === 'admin')
+    activeOrg &&
+    !activeOrg.personal &&
+    (activeOrg.my_role === 'owner' || activeOrg.my_role === 'admin')
 
   const mainNavItems = [
     { to: '/home', icon: Home, label: t('nav.dashboard') },
@@ -55,9 +57,7 @@ export function Sidebar({ expanded, toggleSidebar, isMobile, isOpen, onOpenChang
 
   const settingsNavItems = [
     { to: '/settings', icon: Settings, label: t('nav.settings') },
-    ...(canManageAuditLog
-      ? [{ to: '/audit-log', icon: History, label: t('nav.auditLog') }]
-      : []),
+    ...(canManageAuditLog ? [{ to: '/audit-log', icon: History, label: t('nav.auditLog') }] : []),
   ]
 
   const renderLink = ({ to, icon: Icon, label }: (typeof mainNavItems)[number]) => (

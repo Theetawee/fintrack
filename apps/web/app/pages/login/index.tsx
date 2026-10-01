@@ -78,7 +78,7 @@ const LoginPage = () => {
         <div className='text-center pt-8'>
           <p className='text-sm text-gray-600 dark:text-gray-300'>
             Don&apos;t have an account?{' '}
-            <Link className='text-primary-500 hover:underline' to={getPath('Register')}>
+            <Link className='text-primary-500 hover:underline' to={getPath('Authentication')}>
               Create an account
             </Link>
           </p>

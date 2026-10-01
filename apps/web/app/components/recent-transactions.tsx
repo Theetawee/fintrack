@@ -17,7 +17,7 @@ import {
   ShoppingBag,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 interface CategoryIcon {
   icon: LucideIcon
@@ -90,7 +90,12 @@ export function RecentTransactions() {
 
         return (
           <div key={transaction.id} className='flex items-center'>
-            <div className={cn('flex h-9 w-9 items-center justify-center rounded-full', categoryInfo.color)}>
+            <div
+              className={cn(
+                'flex h-9 w-9 items-center justify-center rounded-full',
+                categoryInfo.color,
+              )}
+            >
               <Icon className='h-4 w-4' aria-hidden='true' />
             </div>
             <div className='ml-4 space-y-1'>

@@ -3,18 +3,27 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 import { Landmark } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/components/ui/chart'
 import { EmptyPlaceholder } from '@/components/ui/empty-placeholder'
 import { AnimateSpinner } from '@/components/spinner'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { SegmentedControl, SegmentedControlItem } from '@/components/ui/segmented-control'
 import {
-  SegmentedControl,
-  SegmentedControlItem,
-} from '@/components/ui/segmented-control'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import { formatCurrency, useCurrency } from '@/context/currency-context'
 import { useDebtPayoff, type DebtPayoffStrategy } from '@/lib/ledger'
 
@@ -46,7 +55,11 @@ export function DebtPayoffPanel() {
   const { data, isLoading } = useDebtPayoff(strategy, extraPayment)
 
   const chartData = useMemo(
-    () => (data?.schedule ?? []).map((point) => ({ month: point.month, total_balance: Number(point.total_balance) })),
+    () =>
+      (data?.schedule ?? []).map((point) => ({
+        month: point.month,
+        total_balance: Number(point.total_balance),
+      })),
     [data],
   )
 
@@ -103,14 +116,16 @@ export function DebtPayoffPanel() {
           <p className='text-sm text-muted-foreground'>
             {data!.months_to_debt_free === null ? (
               <span className='text-destructive'>
-                At this rate, minimum payments alone never cover the interest - these debts will never be
-                paid off. Add an extra payment above.
+                At this rate, minimum payments alone never cover the interest - these debts will
+                never be paid off. Add an extra payment above.
               </span>
             ) : (
               <>
                 Debt-free in{' '}
-                <span className='text-foreground font-semibold'>{data!.months_to_debt_free} months</span>,
-                paying{' '}
+                <span className='text-foreground font-semibold'>
+                  {data!.months_to_debt_free} months
+                </span>
+                , paying{' '}
                 <span className='text-foreground font-semibold'>
                   {formatCurrency(Number(data!.total_interest_paid), currency.code)}
                 </span>{' '}
@@ -139,7 +154,10 @@ export function DebtPayoffPanel() {
                   cursor={{ opacity: 0.1 }}
                   content={
                     <ChartTooltipContent
-                      formatter={(value) => [formatCurrency(Number(value), currency.code), ' Remaining']}
+                      formatter={(value) => [
+                        formatCurrency(Number(value), currency.code),
+                        ' Remaining',
+                      ]}
                     />
                   }
                 />
@@ -169,7 +187,9 @@ export function DebtPayoffPanel() {
                   <TableRow key={row.account_id}>
                     <TableCell className='font-medium'>{row.account}</TableCell>
                     <TableCell className='text-muted-foreground'>
-                      {row.payoff_month === null ? 'Never (at current payments)' : `${row.payoff_month} months`}
+                      {row.payoff_month === null
+                        ? 'Never (at current payments)'
+                        : `${row.payoff_month} months`}
                     </TableCell>
                     <TableCell className='text-right tabular-nums'>
                       {formatCurrency(Number(row.interest_paid), currency.code)}
@@ -182,8 +202,8 @@ export function DebtPayoffPanel() {
 
           {hasExcluded && (
             <p className='text-xs text-muted-foreground'>
-              Not included: {data!.excluded.map((row) => row.account).join(', ')} - missing an interest rate,
-              minimum payment, or exchange rate.{' '}
+              Not included: {data!.excluded.map((row) => row.account).join(', ')} - missing an
+              interest rate, minimum payment, or exchange rate.{' '}
               <Link to='/accounts' className='underline underline-offset-4'>
                 Fix on Accounts
               </Link>
